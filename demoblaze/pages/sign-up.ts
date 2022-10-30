@@ -17,7 +17,7 @@ export class SingUpPage {
 
 
     async goto(){
-      await this.page.goto('https://www.demoblaze.com/index.html');
+      await this.page.goto('/index.html');
     }
   
     async createAccount(){
