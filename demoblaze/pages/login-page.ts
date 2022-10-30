@@ -13,13 +13,13 @@ export class LoginPage {
         this.btnLogin = page.locator('#login2');
         this.btnUserName = page.locator('#loginusername');
         this.btnPassword = page.locator('#loginpassword');
-        this.btnLogIn = page.locator('xpath=//*[@id="logInModal"]/div/div/div[3]/button[2]');
+        this.btnLogIn = page.locator('button:has-text("Log in")');
         this.validateLogin = page.locator('#nameofuser');
       }
 
 
     async goto(){
-      await this.page.goto('https://www.demoblaze.com/index.html');
+      await this.page.goto('/index.html');
     }
 
     async logIn(){
