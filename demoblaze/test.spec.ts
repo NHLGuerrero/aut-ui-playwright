@@ -2,7 +2,8 @@ import { test } from '@playwright/test';
 import { SingUpPage } from './pages/sign-up';
 import { LoginPage } from './pages/login-page';
 import { HomePage } from './pages/home-page';
-import { AddTocartMacbookPage } from './pages/addtocart-macbook-page';
+import { ProductDetailPage } from './pages/product-detail-page';
+import { CartPage } from './pages/cart-page';
 import { PlaceOrder } from './pages/place-order-page';
 
 test('registro exitoso', async ({ page }) => {
@@ -20,7 +21,8 @@ test('inicio de sesion con credenciales validas', async ({ page }) => {
 test('flujo de compras end to end', async ({ page }) => {
   const login = new LoginPage(page);
   const home = new HomePage(page);
-  const addtocartMacbook = new AddTocartMacbookPage(page);
+  const productDetail = new ProductDetailPage(page);
+  const cart = new CartPage(page);
   const placeOrder = new PlaceOrder(page);
   const clientInfo = {
     name: 'Nahuel',
@@ -34,16 +36,17 @@ test('flujo de compras end to end', async ({ page }) => {
     await login.goto();
     await login.logIn();
   });
-  await test.step('agrego una laptop al carrito', async () => {
-    await home.toBuylaptop();
-    await addtocartMacbook.goto();
-    await addtocartMacbook.checkTextMacbook('MacBook air')
-    await addtocartMacbook.addtocartMacbook();
-    await addtocartMacbook.goToCart();
+  await test.step('selecciono el producto', async () => {
+    await home.searchByCategory('Laptops');
+    await home.selectProduct('MacBook air');
   });
-  await test.step('completo los datos de compra', async () => {
-    await placeOrder.goto();
-    await placeOrder.checkProductName('MacBook air');
+  await test.step('añado una laptop al carrito de compras', async () => {
+    await productDetail.checkProductName('MacBook air');
+    await productDetail.addtocart();
+    await productDetail.goToCart();
+  });
+  await test.step('verifico que el producto esta en el carrito y completo los datos de compra', async () => {
+    await cart.checkProductName('MacBook air')
     await placeOrder.goPlaceOrder();
     await placeOrder.completePlaceOrder(clientInfo);
   });

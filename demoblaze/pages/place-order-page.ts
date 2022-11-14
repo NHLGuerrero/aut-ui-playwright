@@ -2,7 +2,6 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export class PlaceOrder {
   readonly page: Page;
-  readonly textMacBook: Locator;
   readonly btnPlaceOrder: Locator;
   readonly name: Locator;
   readonly country: Locator;
@@ -13,11 +12,9 @@ export class PlaceOrder {
   readonly btnPurchase: Locator;
   readonly textThankYou: Locator;
   readonly btnOk: Locator;
-  readonly itemRow: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.textMacBook = page.locator("text=MacBook air");
     this.btnPlaceOrder = page.locator('button:has-text("Place Order")');
     this.name = page.locator("#name");
     this.country = page.locator("#country");
@@ -28,20 +25,10 @@ export class PlaceOrder {
     this.btnPurchase = page.locator('[onclick="purchaseOrder()"]');
     this.textThankYou = page.locator("text=Thank you for your purchase!");
     this.btnOk = page.locator('button:has-text("ok")');
-    this.itemRow = page.locator('[id="tbodyid"]');
-  }
-
-  async goto() {
-    await this.page.goto("/cart.html");
   }
 
   async goPlaceOrder() {
     await this.btnPlaceOrder.click();
-  }
-
-  async checkProductName(productName: string) {
-    await this.itemRow.waitFor({ state: "visible" });
-    await expect(this.textMacBook).toHaveText(productName);
   }
 
   async completePlaceOrder(clientInfo: {

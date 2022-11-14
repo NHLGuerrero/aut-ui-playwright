@@ -1,16 +1,21 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 
 export class HomePage {
-    readonly laptops: Locator;
-    readonly macbook: Locator;
+    readonly categorieLaptops: Locator;
+    readonly productMacbookAir: Locator;
 
     constructor(page: Page) {
-        this.laptops = page.locator('text=Laptops');
-        this.macbook = page.locator ('text=MacBook air');
+        this.categorieLaptops = page.locator('text=Laptops');
+        this.productMacbookAir = page.locator('text=MacBook air');
     }
 
-    async toBuylaptop(){
-        await this.laptops.click();
-        await this.macbook.click();
+    async searchByCategory(category: string) {
+        await expect(this.categorieLaptops).toHaveText(category);
+        await this.categorieLaptops.click();
+    }
+
+    async selectProduct(product: string) {
+        await expect(this.productMacbookAir).toHaveText(product)
+        await this.productMacbookAir.click();
     }
 }
