@@ -2,17 +2,17 @@ import { expect, Locator, Page } from "@playwright/test";
 
 export class CartPage {
     readonly page: Page;
-    readonly textMacBook: Locator;
     readonly itemRow: Locator;
+    readonly productName: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.textMacBook = page.locator("text=MacBook air");
         this.itemRow = page.locator('[id="tbodyid"]');
+        const productName = page.locator(`text=${productName}`);
     }
 
     async checkProductName(productName: string) {
         await this.itemRow.waitFor({ state: "visible" });
-        await expect(this.textMacBook).toHaveText(productName);
+        await expect(this.productName).toHaveText(productName);
     }
 }
