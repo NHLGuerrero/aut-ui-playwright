@@ -6,7 +6,7 @@ export class CartPage {
 
     constructor(page: Page) {
         this.page = page;
-        this.itemRow = page.locator('[class="row"]');
+        this.itemRow = page.locator('#tbodyid');
     }
 
     async checkProductName(productName: string) {
